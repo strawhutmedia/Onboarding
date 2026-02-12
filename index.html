@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Straw Hut Media — Podcast Onboarding</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== STEP 1: Company Verification Gate ===== -->
+  <section id="gate" class="screen active">
+    <div class="container narrow">
+      <div class="logo-area">
+        <h1>Straw Hut Media</h1>
+        <p class="subtitle">Podcast Onboarding Portal</p>
+      </div>
+      <div class="card">
+        <h2>Welcome</h2>
+        <p>Enter your company name to get started. Your company must be pre-approved before you can access the onboarding form.</p>
+        <div class="form-group">
+          <label for="company-name">Company Name</label>
+          <input type="text" id="company-name" placeholder="e.g. Acme Corp" autocomplete="off">
+          <div id="gate-error" class="error-msg hidden">
+            Company not found. Please check the spelling or contact your Straw Hut Media representative.
+          </div>
+        </div>
+        <button id="gate-submit" class="btn primary full-width">Continue</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STEP 2: Onboarding Form ===== -->
+  <section id="onboarding" class="screen">
+    <div class="container">
+      <header class="page-header">
+        <h1>Straw Hut Media</h1>
+        <p class="welcome-msg">Onboarding for <span id="display-company"></span></p>
+        <div class="progress-bar">
+          <div class="progress-track">
+            <div id="form-progress" class="progress-fill" style="width: 0%"></div>
+          </div>
+          <span id="progress-label">Section 1 of 5</span>
+        </div>
+      </header>
+
+      <form id="onboarding-form" novalidate>
+
+        <!-- Section 1: Podcast Basics -->
+        <fieldset class="form-section active" data-section="1">
+          <legend>Podcast Basics</legend>
+          <p class="section-desc">Tell us about your podcast — whether it's brand new or an existing show we're taking over.</p>
+
+          <div class="form-group">
+            <label for="podcast-name">Podcast Name <span class="req">*</span></label>
+            <input type="text" id="podcast-name" name="podcastName" required placeholder="e.g. The Morning Brew Show">
+          </div>
+
+          <div class="form-group">
+            <label for="podcast-description">Podcast Description <span class="req">*</span></label>
+            <textarea id="podcast-description" name="podcastDescription" required rows="4" placeholder="Describe the show — topic, tone, target audience, format..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Podcast Status <span class="req">*</span></label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="podcastStatus" value="new" required> New podcast from scratch
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="podcastStatus" value="takeover"> Taking over an existing podcast
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Brand Status <span class="req">*</span></label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="brandStatus" value="existing" required> Existing / established brand
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="brandStatus" value="new"> New / unknown brand
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div id="takeover-details" class="conditional hidden">
+            <div class="form-group">
+              <label for="existing-podcast-url">Existing Podcast URL / RSS Feed</label>
+              <input type="url" id="existing-podcast-url" name="existingPodcastUrl" placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label for="takeover-notes">What should we know about the current state of the show?</label>
+              <textarea id="takeover-notes" name="takeoverNotes" rows="3" placeholder="Episode count, current audience size, why you're switching..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="podcast-genre">Genre / Category</label>
+            <select id="podcast-genre" name="podcastGenre">
+              <option value="">Select a category...</option>
+              <option>Business</option>
+              <option>Comedy</option>
+              <option>Education</option>
+              <option>Entertainment</option>
+              <option>Health &amp; Wellness</option>
+              <option>Lifestyle</option>
+              <option>Music</option>
+              <option>News &amp; Politics</option>
+              <option>Science &amp; Technology</option>
+              <option>Society &amp; Culture</option>
+              <option>Sports</option>
+              <option>True Crime</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="target-audience">Target Audience</label>
+            <textarea id="target-audience" name="targetAudience" rows="2" placeholder="Who is this show for?"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Section 2: Branding & Guidelines -->
+        <fieldset class="form-section" data-section="2">
+          <legend>Branding &amp; Guidelines</legend>
+          <p class="section-desc">Share any existing branding guidelines so we can stay on-brand from day one.</p>
+
+          <div class="form-group">
+            <label>Do you have existing branding guidelines?</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="hasBrandGuidelines" value="yes"> Yes
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="hasBrandGuidelines" value="no"> No — we need you to create them
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="hasBrandGuidelines" value="partial"> Partial — we have some assets but need help
+              </label>
+            </div>
+          </div>
+
+          <div id="brand-guidelines-upload" class="conditional hidden">
+            <div class="form-group">
+              <label for="brand-guidelines-file">Upload Branding Guidelines (PDF, images, or zip)</label>
+              <div class="file-upload-area" id="brand-drop-zone">
+                <input type="file" id="brand-guidelines-file" name="brandGuidelinesFiles" multiple accept=".pdf,.png,.jpg,.jpeg,.svg,.zip,.ai,.psd">
+                <div class="upload-placeholder">
+                  <span class="upload-icon">&#128206;</span>
+                  <p>Drag &amp; drop files here or <span class="link">browse</span></p>
+                  <p class="small">PDF, PNG, JPG, SVG, ZIP, AI, PSD</p>
+                </div>
+                <ul id="brand-file-list" class="file-list"></ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="brand-colors">Brand Colors (hex codes, color names, or describe them)</label>
+            <input type="text" id="brand-colors" name="brandColors" placeholder="e.g. #FF5733, navy blue, gold">
+          </div>
+
+          <div class="form-group">
+            <label for="brand-fonts">Preferred Fonts / Typography</label>
+            <input type="text" id="brand-fonts" name="brandFonts" placeholder="e.g. Montserrat, Playfair Display">
+          </div>
+
+          <div class="form-group">
+            <label for="brand-voice">Brand Voice / Tone</label>
+            <textarea id="brand-voice" name="brandVoice" rows="2" placeholder="Professional, casual, humorous, authoritative..."></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Section 3: Inspiration & Visual References -->
+        <fieldset class="form-section" data-section="3">
+          <legend>Inspiration &amp; Visual References</legend>
+          <p class="section-desc">Share artwork, podcasts, or brands you admire. This helps us understand your aesthetic. Upload up to 10 images.</p>
+
+          <div class="form-group">
+            <label for="inspiration-files">Upload Inspiration Images</label>
+            <div class="file-upload-area" id="inspo-drop-zone">
+              <input type="file" id="inspiration-files" name="inspirationFiles" multiple accept=".png,.jpg,.jpeg,.gif,.webp,.svg">
+              <div class="upload-placeholder">
+                <span class="upload-icon">&#127912;</span>
+                <p>Drag &amp; drop images here or <span class="link">browse</span></p>
+                <p class="small">PNG, JPG, GIF, WEBP, SVG — max 10 files</p>
+              </div>
+              <ul id="inspo-file-list" class="file-list"></ul>
+            </div>
+            <div id="inspo-limit-error" class="error-msg hidden">Maximum 10 files allowed.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="inspo-podcasts">Podcasts You Admire (names or links)</label>
+            <textarea id="inspo-podcasts" name="inspoPodcasts" rows="3" placeholder="List podcasts whose look, feel, or format you like..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="inspo-brands">Brands or Channels You Admire</label>
+            <textarea id="inspo-brands" name="inspoBrands" rows="3" placeholder="YouTube channels, companies, media brands..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="inspo-notes">Additional Notes on Visual Direction</label>
+            <textarea id="inspo-notes" name="inspoNotes" rows="3" placeholder="Anything else about the look and feel you're going for..."></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Section 4: Recording & Logistics -->
+        <fieldset class="form-section" data-section="4">
+          <legend>Recording &amp; Logistics</legend>
+          <p class="section-desc">Help us plan the first recording session and understand your preferences.</p>
+
+          <div class="form-group">
+            <label>Preferred Recording Location <span class="req">*</span></label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="recordingLocation" value="studio" required> Straw Hut Media Studio
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="recordingLocation" value="virtual"> Virtual / Remote
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="recordingLocation" value="client-location"> Our own location
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="recordingLocation" value="undecided"> Not sure yet — discuss in brainstorm
+              </label>
+            </div>
+          </div>
+
+          <div id="client-location-details" class="conditional hidden">
+            <div class="form-group">
+              <label for="location-address">Location Address or Description</label>
+              <input type="text" id="location-address" name="locationAddress" placeholder="Address or describe the space">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="episode-frequency">Desired Episode Frequency</label>
+            <select id="episode-frequency" name="episodeFrequency">
+              <option value="">Select...</option>
+              <option>Weekly</option>
+              <option>Bi-weekly</option>
+              <option>Monthly</option>
+              <option>Multiple per week</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="episode-length">Desired Episode Length</label>
+            <select id="episode-length" name="episodeLength">
+              <option value="">Select...</option>
+              <option>Under 15 minutes</option>
+              <option>15–30 minutes</option>
+              <option>30–60 minutes</option>
+              <option>60–90 minutes</option>
+              <option>90+ minutes</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="hosts-info">Host(s) Information</label>
+            <textarea id="hosts-info" name="hostsInfo" rows="3" placeholder="Names, roles, and any relevant background for each host..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Will the show have guests?</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="hasGuests" value="yes"> Yes, regularly
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="hasGuests" value="sometimes"> Sometimes
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="hasGuests" value="no"> No, host(s) only
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="hasGuests" value="undecided"> Not sure yet
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="launch-date">Target Launch Date</label>
+            <input type="date" id="launch-date" name="launchDate">
+          </div>
+
+          <div class="form-group">
+            <label for="logistics-notes">Additional Notes</label>
+            <textarea id="logistics-notes" name="logisticsNotes" rows="3" placeholder="Anything else about recording or scheduling..."></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Section 5: Review & Submit -->
+        <fieldset class="form-section" data-section="5">
+          <legend>Review &amp; Submit</legend>
+          <p class="section-desc">Review your information below and hit submit when ready. We'll use this to prepare for our brainstorm meeting.</p>
+
+          <div id="form-summary" class="summary-box"></div>
+
+          <div class="form-group">
+            <label for="anything-else">Anything else we should know?</label>
+            <textarea id="anything-else" name="anythingElse" rows="4" placeholder="Questions, concerns, ideas, special requests..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="confirm-submit" required>
+              I confirm the information above is accurate and I'm ready to begin the onboarding process.
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Navigation -->
+        <div class="form-nav">
+          <button type="button" id="prev-btn" class="btn secondary" disabled>Back</button>
+          <button type="button" id="next-btn" class="btn primary">Next</button>
+          <button type="submit" id="submit-btn" class="btn primary hidden">Submit Onboarding</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== STEP 3: Checklist / Dashboard ===== -->
+  <section id="checklist" class="screen">
+    <div class="container">
+      <header class="page-header">
+        <h1>Straw Hut Media</h1>
+        <p class="welcome-msg">Onboarding Checklist for <span id="checklist-company"></span></p>
+        <p class="checklist-subtitle">Your form has been submitted. Here's what happens next.</p>
+      </header>
+
+      <div class="checklist-grid">
+
+        <!-- Phase 1 -->
+        <div class="checklist-phase" data-phase="1">
+          <div class="phase-header">
+            <span class="phase-number">Phase 1</span>
+            <h3>Kickoff</h3>
+          </div>
+          <ul class="checklist-items">
+            <li data-task="brainstorm-meeting">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Schedule Brainstorm Meeting</strong>
+                <p>Our first call to discuss your vision, format, and goals for the show.</p>
+              </div>
+            </li>
+            <li data-task="brainstorm-complete">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Complete Brainstorm Meeting</strong>
+                <p>Align on podcast concept, format, recording approach, and timeline.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="checklist-phase" data-phase="2">
+          <div class="phase-header">
+            <span class="phase-number">Phase 2</span>
+            <h3>Branding &amp; Design</h3>
+          </div>
+          <ul class="checklist-items">
+            <li data-task="brand-guidelines">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Finalize Branding Guidelines</strong>
+                <p>Establish colors, typography, voice, and visual identity for the show.</p>
+              </div>
+            </li>
+            <li data-task="show-logo">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Create Show Logo</strong>
+                <p>Design the primary logo for the podcast.</p>
+              </div>
+            </li>
+            <li data-task="podcast-cover-art">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Create Podcast Cover Art</strong>
+                <p>3000x3000px artwork for Apple Podcasts, Spotify, etc.</p>
+              </div>
+            </li>
+            <li data-task="youtube-cover-art">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Create YouTube Channel Art</strong>
+                <p>Banner, profile image, and video-format cover art for YouTube.</p>
+              </div>
+            </li>
+            <li data-task="thumbnail-templates">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Create Episode Thumbnail Templates</strong>
+                <p>Reusable templates for per-episode thumbnails on YouTube.</p>
+              </div>
+            </li>
+            <li data-task="end-graphics">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Create End Screen Graphics</strong>
+                <p>Ending cards/graphics for YouTube and Spotify video episodes.</p>
+              </div>
+            </li>
+            <li data-task="social-promo-graphics">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Create Social Media Promo Graphics</strong>
+                <p>Templates for promoting episodes on Instagram, X, LinkedIn, etc.</p>
+              </div>
+            </li>
+            <li data-task="transition-graphics">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Create Transition / Segment Graphics</strong>
+                <p>Motion graphics for segment transitions within full episodes.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="checklist-phase" data-phase="3">
+          <div class="phase-header">
+            <span class="phase-number">Phase 3</span>
+            <h3>Production</h3>
+          </div>
+          <ul class="checklist-items">
+            <li data-task="recording-setup">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Confirm Recording Setup</strong>
+                <p>Finalize location, equipment, and technical setup for recording.</p>
+              </div>
+            </li>
+            <li data-task="first-recording">
+              <span class="check-icon"></span>
+              <div>
+                <strong>First Recording Session</strong>
+                <p>Record the first episode (or pilot) of the show.</p>
+              </div>
+            </li>
+            <li data-task="post-production">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Post-Production &amp; Editing</strong>
+                <p>Edit audio/video, add graphics, transitions, and finalize the episode.</p>
+              </div>
+            </li>
+            <li data-task="distribution-setup">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Distribution &amp; Platform Setup</strong>
+                <p>Set up podcast hosting, submit to directories, configure YouTube channel.</p>
+              </div>
+            </li>
+            <li data-task="first-publish">
+              <span class="check-icon"></span>
+              <div>
+                <strong>Publish First Episode</strong>
+                <p>Launch the first episode across all platforms.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
