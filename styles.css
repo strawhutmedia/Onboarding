@@ -86,10 +86,9 @@ body {
 .logo-img.sm {
   height: 28px;
 }
-.logo-img.on-dark-bg {
-  background: var(--navy);
-  border-radius: 6px;
-  padding: 6px 10px;
+.logo-img.on-light {
+  /* Recolor white PNG to navy (#1a1f3d) */
+  filter: brightness(0) saturate(100%) invert(10%) sepia(30%) saturate(1200%) hue-rotate(207deg) brightness(92%);
 }
 
 /* ============================================
