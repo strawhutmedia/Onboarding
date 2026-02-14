@@ -76,6 +76,21 @@ body {
   color: var(--navy);
 }
 
+/* ---- Logo Image ---- */
+.logo-img {
+  height: 40px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.logo-img.sm {
+  height: 28px;
+}
+.logo-img.on-light {
+  /* Recolor white PNG to navy (#1a1f3d) */
+  filter: brightness(0) saturate(100%) invert(10%) sepia(30%) saturate(1200%) hue-rotate(207deg) brightness(92%);
+}
+
 /* ============================================
    GATE SCREEN
    ============================================ */
@@ -105,8 +120,11 @@ body {
 .gate-logo {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
   margin-bottom: 28px;
+}
+.gate-logo-img {
+  height: 60px;
 }
 .gate-logo h1 {
   font-size: 22px;
@@ -806,6 +824,9 @@ select {
   color: var(--navy);
   padding: 3px 8px;
   font-size: 10px;
+}
+.success-footer .logo-img {
+  height: 22px;
 }
 
 /* ============================================
