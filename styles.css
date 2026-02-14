@@ -121,8 +121,11 @@ body {
 .gate-logo {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
   margin-bottom: 28px;
+}
+.gate-logo-img {
+  height: 60px;
 }
 .gate-logo h1 {
   font-size: 22px;
