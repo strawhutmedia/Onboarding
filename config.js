@@ -1,10 +1,11 @@
 /**
- * Approved Companies Configuration
- *
- * Companies are managed via the Admin Portal (admin.html)
- * and stored in localStorage. The fallback list below is used
- * only if no companies have been added through the admin.
+ * Straw Hut Media — Onboarding Configuration
  */
+
+/* Notification email — submissions are sent here via FormSubmit.co */
+var SHM_NOTIFICATION_EMAIL = "onboarding@strawhutmedia.com";
+
+/* Approved Companies (managed via Admin Portal) */
 var APPROVED_COMPANIES = (function () {
   var STORAGE_KEY = "shm_approved_companies";
   var fallback = [
