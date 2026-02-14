@@ -520,13 +520,144 @@
     data.inspoFiles = uploadedFiles.inspo.map(function (f) { return f.name; });
     data.musicFiles = uploadedFiles.music.map(function (f) { return f.name; });
 
-    // In production, POST this to your backend. For now, log it.
-    console.log("=== ONBOARDING SUBMISSION ===");
-    console.log(JSON.stringify(data, null, 2));
+    // Save submission to localStorage for admin portal
+    saveSubmission(data);
+
+    // Send email notification via FormSubmit.co
+    sendEmailNotification(data);
 
     // Show success screen
     switchScreen(successScreen);
   });
+
+  // ---- Save submission to localStorage ----
+  function saveSubmission(data) {
+    try {
+      var SUBS_KEY = "shm_submissions";
+      var existing = [];
+      var stored = localStorage.getItem(SUBS_KEY);
+      if (stored) {
+        existing = JSON.parse(stored);
+        if (!Array.isArray(existing)) existing = [];
+      }
+      existing.push(data);
+      localStorage.setItem(SUBS_KEY, JSON.stringify(existing));
+    } catch (e) {
+      console.warn("Could not save submission to localStorage:", e);
+    }
+  }
+
+  // ---- Send email via FormSubmit.co ----
+  function sendEmailNotification(data) {
+    var email = (typeof SHM_NOTIFICATION_EMAIL !== "undefined") ? SHM_NOTIFICATION_EMAIL : "onboarding@strawhutmedia.com";
+    var endpoint = "https://formsubmit.co/ajax/" + email;
+
+    // Build a readable email body
+    var body = "NEW PODCAST ONBOARDING SUBMISSION\n";
+    body += "Company: " + (data.company || "Unknown") + "\n";
+    body += "Submitted: " + new Date(data.submittedAt).toLocaleString() + "\n\n";
+
+    body += "--- CONTACT INFORMATION ---\n";
+    body += "Name: " + (data.contactFirstName || "") + " " + (data.contactLastName || "") + "\n";
+    body += "Email: " + (data.contactEmail || "Not provided") + "\n";
+    body += "Phone: " + (data.contactPhone || "Not provided") + "\n";
+    body += "Role: " + (data.contactRole || "Not provided") + "\n";
+    body += "Timezone: " + (data.contactTimezone || "Not provided") + "\n";
+    body += "Preferred Contact: " + (data.preferredContact || "Not provided") + "\n\n";
+
+    body += "--- PODCAST BASICS ---\n";
+    body += "Podcast Name: " + (data.podcastName || "Not provided") + "\n";
+    body += "Description: " + (data.podcastDescription || "Not provided") + "\n";
+    body += "Status: " + (data.podcastStatus || "Not provided") + "\n";
+    body += "Brand Status: " + (data.brandStatus || "Not provided") + "\n";
+    body += "Genre: " + (data.podcastGenre || "Not provided") + "\n";
+    body += "Format: " + (data.podcastFormat || "Not provided") + "\n";
+    body += "Target Audience: " + (data.targetAudience || "Not provided") + "\n\n";
+
+    body += "--- BRANDING ---\n";
+    body += "Has Guidelines: " + (data.hasBrandGuidelines || "Not provided") + "\n";
+    body += "Brand Colors: " + (data.brandColors || "Not provided") + "\n";
+    body += "Fonts: " + (data.brandFonts || "Not provided") + "\n";
+    body += "Voice/Tone: " + (data.brandVoice || "Not provided") + "\n";
+    if (data.brandFiles && data.brandFiles.length) body += "Brand Files: " + data.brandFiles.join(", ") + "\n";
+    if (data.logoFiles && data.logoFiles.length) body += "Logo Files: " + data.logoFiles.join(", ") + "\n";
+    body += "\n";
+
+    body += "--- INSPIRATION ---\n";
+    body += "Podcasts Admired: " + (data.inspoPodcasts || "Not provided") + "\n";
+    body += "Brands Admired: " + (data.inspoBrands || "Not provided") + "\n";
+    body += "Visual Notes: " + (data.inspoNotes || "Not provided") + "\n";
+    if (data.inspoFiles && data.inspoFiles.length) body += "Inspiration Files: " + data.inspoFiles.join(", ") + "\n";
+    body += "\n";
+
+    body += "--- MUSIC & AUDIO ---\n";
+    body += "Needs Music: " + (data.needsMusic || "Not provided") + "\n";
+    body += "Music Vibe: " + (data.musicVibe || "Not provided") + "\n";
+    body += "Music References: " + (data.musicReferences || "Not provided") + "\n";
+    body += "Sound Effects: " + (data.wantsSFX || "Not provided") + "\n";
+    if (data.musicFiles && data.musicFiles.length) body += "Music Files: " + data.musicFiles.join(", ") + "\n";
+    body += "\n";
+
+    body += "--- SOCIAL MEDIA & WEB ---\n";
+    body += "Website: " + (data.socialWebsite || "Not provided") + "\n";
+    body += "Instagram: " + (data.socialInstagram || "Not provided") + "\n";
+    body += "X (Twitter): " + (data.socialTwitter || "Not provided") + "\n";
+    body += "TikTok: " + (data.socialTiktok || "Not provided") + "\n";
+    body += "YouTube: " + (data.socialYoutube || "Not provided") + "\n";
+    body += "LinkedIn: " + (data.socialLinkedin || "Not provided") + "\n";
+    body += "Social Management: " + (data.manageSocial || "Not provided") + "\n";
+    body += "Short-form Clips: " + (data.wantsClips || "Not provided") + "\n\n";
+
+    body += "--- RECORDING & LOGISTICS ---\n";
+    body += "Location: " + (data.recordingLocation || "Not provided") + "\n";
+    if (data.locationAddress) body += "Address: " + data.locationAddress + "\n";
+    body += "Frequency: " + (data.episodeFrequency || "Not provided") + "\n";
+    body += "Episode Length: " + (data.episodeLength || "Not provided") + "\n";
+    body += "Host(s): " + (data.hostsInfo || "Not provided") + "\n";
+    body += "Guests: " + (data.hasGuests || "Not provided") + "\n";
+    body += "Video: " + (data.isVideo || "Not provided") + "\n";
+    body += "Launch Date: " + (data.launchDate || "Not provided") + "\n\n";
+
+    body += "--- DISTRIBUTION & MONETIZATION ---\n";
+    body += "Platforms: " + (data.platforms && data.platforms.length ? data.platforms.join(", ") : "Not provided") + "\n";
+    body += "Monetization: " + (data.wantsMonetization || "Not provided") + "\n";
+    body += "Monetization Notes: " + (data.monetizationNotes || "Not provided") + "\n";
+    body += "Podcast Website: " + (data.wantsWebsite || "Not provided") + "\n\n";
+
+    body += "--- MARKETING & LAUNCH ---\n";
+    body += "Launch Episodes: " + (data.launchEpisodes || "Not provided") + "\n";
+    body += "Trailer: " + (data.wantsTrailer || "Not provided") + "\n";
+    body += "Press Kit: " + (data.wantsPressKit || "Not provided") + "\n";
+    body += "Marketing Notes: " + (data.marketingNotes || "Not provided") + "\n";
+    body += "Goals: " + (data.goals || "Not provided") + "\n\n";
+
+    body += "--- ADDITIONAL ---\n";
+    body += "Anything Else: " + (data.anythingElse || "Not provided") + "\n";
+
+    var formData = new FormData();
+    formData.append("_subject", "New Onboarding: " + (data.company || "Unknown Company") + " — " + (data.podcastName || "Unnamed Podcast"));
+    formData.append("Company", data.company || "");
+    formData.append("Contact", (data.contactFirstName || "") + " " + (data.contactLastName || ""));
+    formData.append("Email", data.contactEmail || "");
+    formData.append("Phone", data.contactPhone || "");
+    formData.append("Podcast Name", data.podcastName || "");
+    formData.append("message", body);
+    formData.append("_template", "box");
+
+    fetch(endpoint, {
+      method: "POST",
+      body: formData,
+      headers: { "Accept": "application/json" }
+    }).then(function (res) {
+      if (res.ok) {
+        console.log("Email notification sent successfully.");
+      } else {
+        console.warn("Email notification failed:", res.status);
+      }
+    }).catch(function (err) {
+      console.warn("Email notification error:", err);
+    });
+  }
 
   // ---- Utils ----
   function escapeHtml(str) {

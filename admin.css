@@ -6,7 +6,7 @@
 
 /* ---- Dashboard layout ---- */
 .admin-container {
-  max-width: 640px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 40px 24px 80px;
 }
@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 .admin-header-left {
   display: flex;
@@ -39,6 +39,42 @@
 .btn-sm {
   padding: 8px 20px;
   font-size: 13px;
+}
+
+/* ---- Tabs ---- */
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50px;
+  padding: 4px;
+}
+.admin-tab {
+  flex: 1;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--gray-400);
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.admin-tab:hover {
+  color: var(--white);
+}
+.admin-tab.active {
+  background: var(--green);
+  color: var(--white);
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
 }
 
 /* ---- Admin card ---- */
@@ -81,6 +117,9 @@
   font-size: 14px;
   line-height: 1.6;
   margin-bottom: 24px;
+}
+.admin-card-desc strong {
+  color: var(--green-hover);
 }
 
 /* ---- Add company row ---- */
@@ -138,6 +177,155 @@
   background: rgba(248, 113, 113, 0.1);
 }
 
+/* ---- Submissions list ---- */
+.submissions-list {
+  margin-top: 16px;
+}
+
+.submission-card {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+.submission-card:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.submission-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  gap: 12px;
+}
+.submission-header:hover {
+  background: var(--gray-50);
+}
+
+.submission-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.submission-company {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.submission-meta {
+  font-size: 13px;
+  color: var(--gray-500);
+}
+
+.submission-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.submission-completeness {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+.status-good {
+  background: rgba(45, 212, 160, 0.12);
+  color: #16a085;
+}
+.status-partial {
+  background: rgba(251, 191, 36, 0.12);
+  color: #b7791f;
+}
+.status-low {
+  background: rgba(248, 113, 113, 0.12);
+  color: #c53030;
+}
+
+.submission-toggle {
+  font-size: 12px;
+  color: var(--gray-400);
+  transition: transform 0.2s ease;
+}
+
+/* Submission details (expanded) */
+.submission-details {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--gray-200);
+}
+
+.sub-detail-grid {
+  display: grid;
+  gap: 0;
+}
+
+.sub-section {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.sub-section:last-child {
+  border-bottom: none;
+}
+
+.sub-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--green-hover);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.sub-fields {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 6px 16px;
+  font-size: 13px;
+}
+.sub-fields dt {
+  color: var(--gray-500);
+  font-weight: 500;
+}
+.sub-fields dd {
+  color: var(--gray-800);
+  word-break: break-word;
+}
+.sub-fields dd.missing {
+  color: var(--gray-400);
+  font-style: italic;
+}
+
+.submission-actions {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gray-100);
+  display: flex;
+  gap: 10px;
+}
+.submission-actions .btn.secondary {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.3);
+  font-size: 12px;
+  padding: 6px 16px;
+}
+.submission-actions .btn.secondary:hover {
+  background: rgba(248, 113, 113, 0.08);
+  border-color: #f87171;
+  color: #dc2626;
+}
+
 /* ---- Empty state ---- */
 .empty-state {
   text-align: center;
@@ -164,5 +352,25 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+  .admin-tabs {
+    flex-direction: column;
+  }
+  .submission-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .submission-right {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .sub-fields {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .sub-fields dt {
+    margin-top: 8px;
+    font-weight: 600;
   }
 }
