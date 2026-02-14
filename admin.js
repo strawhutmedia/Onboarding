@@ -299,8 +299,7 @@
       sub.socialWebsite, sub.socialInstagram,
       sub.recordingLocation, sub.episodeFrequency, sub.episodeLength, sub.hostsInfo,
       sub.hasGuests, sub.isVideo,
-      sub.wantsMonetization,
-      sub.launchEpisodes, sub.wantsTrailer,
+      sub.launchEpisodes, sub.teaserIdeas,
       sub.goals
     ];
     var filled = 0;
@@ -378,17 +377,9 @@
       ["Launch Date", sub.launchDate]
     ]);
 
-    html += sectionBlock("Distribution & Monetization", [
-      ["Platforms", sub.platforms && sub.platforms.length ? sub.platforms.join(", ") : null],
-      ["Monetization", sub.wantsMonetization],
-      ["Monetization Notes", sub.monetizationNotes],
-      ["Podcast Website", sub.wantsWebsite]
-    ]);
-
     html += sectionBlock("Marketing & Launch", [
       ["Launch Episodes", sub.launchEpisodes],
-      ["Trailer", sub.wantsTrailer],
-      ["Press Kit", sub.wantsPressKit],
+      ["Teaser Ideas", sub.teaserIdeas],
       ["Marketing Notes", sub.marketingNotes],
       ["Goals", sub.goals]
     ]);
