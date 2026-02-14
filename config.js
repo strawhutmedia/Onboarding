@@ -1,12 +1,27 @@
 /**
  * Approved Companies Configuration
  *
- * Add or remove company names from this list to control access.
- * Names are matched case-insensitively.
+ * Companies are managed via the Admin Portal (admin.html)
+ * and stored in localStorage. The fallback list below is used
+ * only if no companies have been added through the admin.
  */
-const APPROVED_COMPANIES = [
-  "Acme Corp",
-  "Example Company",
-  "Demo Client",
-  // Add approved company names here
-];
+var APPROVED_COMPANIES = (function () {
+  var STORAGE_KEY = "shm_approved_companies";
+  var fallback = [
+    "Acme Corp",
+    "Example Company",
+    "Demo Client",
+  ];
+
+  try {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      var parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) { /* ignore */ }
+
+  return fallback;
+})();

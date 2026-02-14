@@ -1,0 +1,168 @@
+/* ============================================
+   Admin Portal Styles
+   ============================================ */
+
+/* Login screen uses gate styles from styles.css */
+
+/* ---- Dashboard layout ---- */
+.admin-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+.admin-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.admin-title {
+  display: block;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--white);
+  letter-spacing: -0.3px;
+}
+.admin-subtitle {
+  display: block;
+  font-size: 13px;
+  color: var(--gray-400);
+  margin-top: 2px;
+}
+
+.btn-sm {
+  padding: 8px 20px;
+  font-size: 13px;
+}
+
+/* ---- Admin card ---- */
+.admin-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  box-shadow: var(--shadow-lg);
+}
+
+.admin-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.admin-card-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.5px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 13px;
+  background: var(--green-soft);
+  color: var(--green-hover);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.admin-card-desc {
+  color: var(--gray-500);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* ---- Add company row ---- */
+.add-company-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.add-company-row input {
+  flex: 1;
+}
+.add-company-row .btn {
+  padding: 12px 28px;
+  flex-shrink: 0;
+}
+
+/* ---- Company list ---- */
+.company-list {
+  margin-top: 20px;
+}
+
+.company-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xs);
+  margin-bottom: 8px;
+  transition: background 0.15s ease;
+}
+.company-item:hover {
+  background: var(--gray-50);
+}
+
+.company-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray-800);
+}
+
+.company-remove {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+.company-remove:hover {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+/* ---- Empty state ---- */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--gray-400);
+  font-size: 14px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .admin-container {
+    padding: 24px 16px 60px;
+  }
+  .admin-card {
+    padding: 28px 20px;
+  }
+  .add-company-row {
+    flex-direction: column;
+  }
+  .add-company-row .btn {
+    width: 100%;
+  }
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
