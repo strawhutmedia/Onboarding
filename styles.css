@@ -76,6 +76,23 @@ body {
   color: var(--navy);
 }
 
+/* ---- Logo Image ---- */
+.logo-img {
+  height: 40px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.logo-img.sm {
+  height: 28px;
+}
+.logo-img.inverted {
+  filter: invert(1) brightness(2);
+}
+.logo-img.on-white {
+  filter: none;
+}
+
 /* ============================================
    GATE SCREEN
    ============================================ */
@@ -806,6 +823,9 @@ select {
   color: var(--navy);
   padding: 3px 8px;
   font-size: 10px;
+}
+.success-footer .logo-img {
+  height: 22px;
 }
 
 /* ============================================
