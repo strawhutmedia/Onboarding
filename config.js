@@ -10,7 +10,7 @@ var SHM_NOTIFICATION_EMAIL = "onboarding@strawhutmedia.com";
  * See google-apps-script.gs for setup instructions.
  * After deploying, paste your Web App URL below.
  */
-var SHM_UPLOAD_ENDPOINT = "";
+var SHM_UPLOAD_ENDPOINT = "https://script.google.com/macros/s/AKfycbx1UWNpB__k-daVkmbrzexhnLW633vNPeav_aPNSVZQugSJB5DXoQY3nhVHCgvG2e3yDg/exec";
 
 /* Approved Companies (managed via Admin Portal) */
 var APPROVED_COMPANIES = (function () {
