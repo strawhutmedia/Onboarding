@@ -820,7 +820,7 @@
       data.inspoFiles = uploadedFiles.inspo.map(function (f) { return f.name; });
       data.musicFiles = uploadedFiles.music.map(function (f) { return f.name; });
 
-      // Save submission to localStorage for admin portal
+      // Save submission to Google Sheets backend
       saveSubmission(data);
 
       // Send email notification via FormSubmit.co

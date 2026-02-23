@@ -18,7 +18,7 @@ var SHM_UPLOAD_ENDPOINT = "https://script.google.com/macros/s/AKfycbx1UWNpB__k-d
  * The form starts with a fallback list, then fetches the real list from the backend.
  * When the backend responds, the dropdown is dynamically updated.
  */
-var APPROVED_COMPANIES = ["Loading..."];
+var APPROVED_COMPANIES = [];
 
 (function loadCompaniesFromBackend() {
   var endpoint = (typeof SHM_UPLOAD_ENDPOINT !== "undefined") ? SHM_UPLOAD_ENDPOINT : "";
@@ -27,22 +27,8 @@ var APPROVED_COMPANIES = ["Loading..."];
   fetch(endpoint + "?action=getCompanies")
     .then(function (res) { return res.json(); })
     .then(function (json) {
-      if (json.success && json.companies && json.companies.length > 0) {
+      if (json.success && json.companies) {
         APPROVED_COMPANIES = json.companies;
-        // Update the company dropdown if it exists on the page
-        var select = document.getElementById("company-select");
-        if (select) {
-          // Preserve current placeholder option
-          var currentVal = select.value;
-          select.innerHTML = '<option value="" disabled selected>Select your company...</option>';
-          APPROVED_COMPANIES.forEach(function (name) {
-            var opt = document.createElement("option");
-            opt.value = name;
-            opt.textContent = name;
-            select.appendChild(opt);
-          });
-          if (currentVal) select.value = currentVal;
-        }
       }
     })
     .catch(function (err) {
